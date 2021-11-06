@@ -1,0 +1,82 @@
+<div class="container">
+    
+    <div class="row form-group col-3">
+        <label>
+            filter by horse 
+        </label>
+        <select class="form-control" [(ngModel)]="horseId2">
+            <option value="0" selected>all</option>
+            <option [selected]="horseId2 == horse.id" *ngFor="let horse of horses" value="{{horse.id}}">{{horse.name}}</option>
+        </select>
+
+        <button class="mrg update2 btn-primary" (click)="filterTable(horseId2)">filter</button>
+    </div>
+
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Bet</th>
+            <th scope="col">Horse</th>
+            <th scope="col">Remove</th>
+            <th scope="col">Update</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let better of betters">
+            <td>{{better.name}}</td>
+            <td>{{better.surname}}</td>
+            <td>{{better.bet}}</td>
+            <td>{{better.horseName}}</td>
+            <td><button class="delete btn-danger" (click)="deleteBetter(better.id)">remove</button></td>
+            <td><button class="update btn-primary" (click)="loadValuesToForm(better)">update</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4>add better</h4>
+    <div class="row">
+        <form [formGroup]="betterForm" class="col-3">
+
+            <div class="form-group">
+                <label for="name">
+                    name 
+                </label>
+                <input id="name" class="form-control" type="text" formControlName="name" [(ngModel)]="name">
+            </div>
+        
+            <div class="form-group">
+                <label for="surname">
+                    surname 
+                </label>
+                <input class="form-control" id="surname" type="text" formControlName="surname" [(ngModel)]="surname">
+            </div>
+    
+            <div class="form-group">
+                <label for="bet">
+                    bet 
+                </label>
+                <input class="form-control" id="bet" type="text" formControlName="bet" [(ngModel)]="bet">
+            </div>
+            
+            <div class="form-group">
+                <label for="horses">
+                    horses
+                </label>
+                <select class="form-control" [(ngModel)]="horseId" formControlName="horseId">
+                    <option [selected]="horseId == horse.id" *ngFor="let horse of horses" value="{{horse.id}}">{{horse.name}}</option>
+                </select>
+            </div>
+            
+            <div *ngIf="update; then thenBlock else elseBlock"></div>
+            <ng-template #thenBlock><button class="update2 btn-primary" (click)="updateBetter()">update</button></ng-template>
+            <ng-template #elseBlock><button class="button btn-primary" (click)="addBetter()">Add</button></ng-template>
+        </form>
+    </div>
+
+    <app-horse (onHorseUpdated) = "horseUpdated($event)"></app-horse>
+
+</div>

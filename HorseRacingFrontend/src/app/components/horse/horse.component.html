@@ -1,0 +1,62 @@
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Runs</th>
+        <th scope="col">Wins</th>
+        <th scope="col">About</th>
+        <th scope="col">Remove</th>
+        <th scope="col">Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let horse of horses">
+        <td>{{horse.name}}</td>
+        <td>{{horse.runs}}</td>
+        <td>{{horse.wins}}</td>
+        <td>{{horse.about}}</td>
+        <td><button class="delete btn-danger" (click)="deleteHorse(horse.id)">remove</button></td>
+        <td><button class="update btn-primary" (click)="loadValuesToForm(horse)">update</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<h4>add horse</h4>
+<div class="row">
+    <form [formGroup]="horseForm" class="col-3">
+
+        <div class="form-group">
+            <label for="title">
+                name 
+            </label>
+            <input class="form-control" id="name" type="text" formControlName="name" [(ngModel)]="name">
+        </div>
+      
+        <div class="form-group">
+            <label for="runs">
+                runs 
+            </label>
+            <input class="form-control" id="runs" type="text" formControlName="runs" [(ngModel)]="runs">
+        </div>
+    
+        <div class="form-group">
+            <label for="wins">
+                wins 
+            </label>
+            <input class="form-control" id="wins" type="text" formControlName="wins" [(ngModel)]="wins">
+        </div>
+    
+        <div class="form-group">
+            <label for="about">
+                about 
+            </label>
+            <input class="form-control" id="about" type="text" formControlName="about" [(ngModel)]="about">
+        </div>
+        
+        <div *ngIf="update; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock><button class="update2 btn-primary" (click)="updateHorse()">update</button></ng-template>
+        <ng-template #elseBlock><button class="button btn-primary" (click)="addHorse()">Add</button></ng-template>
+    </form>
+</div>
